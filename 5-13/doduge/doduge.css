@@ -6,8 +6,13 @@
     height: 400px;
 }
 
-.square {
+.square{
     height: 100px;
     width: 100px;
     border: solid black 1px;
+}
+
+.mole {
+    background-image: url("현숙이 행님.jpg");
+    background-size: cover;
 }
