@@ -12,5 +12,18 @@ let snake = 0;
 
 function start() {
     squares[snake].classList.add("snake");
+    moveSnake();
+    moveSnake();
 }
+
+function runGame() {
+    snake = snake + 1;
+    squares[snake].classList.add("snake");
+}
+
+startBtn.addEventListener("click", start);
+
+
+
+
 startBtn.addEventListener("click", start)
