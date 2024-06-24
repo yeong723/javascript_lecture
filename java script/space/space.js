@@ -1,5 +1,4 @@
 const stageSize = 15;
-
 //스테이지 생성
 for(let i=0; i < stageSize*stageSize; i++) {
     const box = document.createElement("div");
@@ -12,12 +11,16 @@ const startBtn = document.querySelector("#startBtn");
 const stopBtn = document.querySelector("#stopBtn");
 const display = document.querySelector("#display");
 
-let playerLoc = stageSize*(stageSize-2)+7
+let playerLoc = stageSize*(stageSize-2)+7;
+let invaderLoc = [
+    0, 1, 2, 3, 4, 5, 6, 7, 8, 9,
+    15, 16, 17, 18, 19, 20, 21, 22, 23, 24,
+    30, 31, 32, 33, 34, 35, 36, 37, 38, 39];
+let gameInterval;
 
 function makePlayer() {
     stage[playerLoc].classList.add("player");
 }
-
 function movePlayer(e) {
     stage[playerLoc].classList.remove("player");
     switch (e.keyCode) {
@@ -30,14 +33,6 @@ function movePlayer(e) {
     }
     stage[playerLoc].classList.add("player");
 }
-
-
-let invaderLoc = [
-    0, 1, 2, 3, 4, 5, 6, 7, 8, 9,
-    15, 16, 17, 18, 19, 20, 21, 22, 23, 24,
-    30, 31, 32, 33, 34, 35, 36, 37, 38, 39
-]
-let gameInterval;
 
 function makeInvader() {
     invaderLoc.forEach(function(invader) {
@@ -55,6 +50,16 @@ function moveInvader() {
 }
 
 function gameStart() {
+    stage[playerLoc].classList.remove("player");
+    invaderLoc.forEach(function(invader){
+        stage[invader].classList.remove("invader");
+    });
+    playerLoc = stageSize*(stageSize-2)+7
+    invaderLoc = [
+        0, 1, 2, 3, 4, 5, 6, 7, 8, 9,
+        15, 16, 17, 18, 19, 20, 21, 22, 23, 24,
+        30, 31, 32, 33, 34, 35, 36, 37, 38, 39
+    ]
     makePlayer();
     makeInvader();
     gameInterval = setInterval(moveInvader, 1000);
