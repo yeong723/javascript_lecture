@@ -8,7 +8,7 @@ for(let i=0; i < stageSize*stageSize; i++) {
 
 const grid = document.querySelector(".grid");
 const stage = document.querySelectorAll(".grid div");
-const stattBtn = document.querySelector("#startBtn");
+const startBtn = document.querySelector("#startBtn");
 const stopBtn = document.querySelector("#stopBtn");
 const display = document.querySelector("#display");
 
@@ -17,7 +17,6 @@ let playerLoc = stageSize*(stageSize-2)+7
 function makePlayer() {
     stage[playerLoc].classList.add("player");
 }
-makePlayer()
 
 function movePlayer(e) {
     stage[playerLoc].classList.remove("player");
@@ -32,7 +31,6 @@ function movePlayer(e) {
     stage[playerLoc].classList.add("player");
 }
 
-document.addEventListener("keyup", movePlayer)
 
 let invaderLoc = [
     0, 1, 2, 3, 4, 5, 6, 7, 8, 9,
@@ -46,7 +44,38 @@ function makeInvader() {
         stage[invader].classList.add("invader")
     })
 }
-makeInvader();
-function moveInvader() {}
+function moveInvader() {
+    invaderLoc.forEach(function(invader) {
+        stage[invader].classList.remove("invader")
+    })
+    for(let i=0; i < invaderLoc.length; i++) {
+        invaderLoc[i]++;
+        stage[invaderLoc[i]].classList.add("invader")
+    }
+}
 
-interval = setInterval(moveInvader, 1000);
+function gameStart() {
+    makePlayer();
+    makeInvader();
+    gameInterval = setInterval(moveInvader, 1000);
+    document.addEventListener("keyup", movePlayer);
+    displayStatus();
+    gameRun();
+}
+
+
+function gameStop() {
+    clearInterval(gameInterval);
+    document.removeEventListener("keyup", movePlayer);
+}
+
+function gameRun() {
+    moveInvader();
+}
+
+function displayStatus() {
+    display.innerText = invaderLoc.length + "/" + invaderLoc.length
+}
+
+startBtn.addEventListener("click", gameStart);
+stopBtn.addEventListener("click", gameStop);
